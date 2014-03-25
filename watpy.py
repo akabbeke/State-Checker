@@ -55,6 +55,27 @@ def makeState(stateList,signs):
 		t += 1
 	return red
 
+def printNiceArray(ar):
+	for i in range(ar.shape[0]):
+		row = ''
+		for j in range(ar.shape[1]):
+			if ar[i,j] < 0:
+				row += str(int(ar[i,j]))+' '
+			else:
+				row += ' '+str(int(ar[i,j]))+' '
+
+		print row
+
+def printNiceList(ar):
+	row = ''
+	for j in range(ar.shape[0]):
+		if ar[j] < 0:
+			row += str(int(ar[j]))+' '
+		else:
+			row += ' '+str(int(ar[j]))+' '
+
+	print row
+
 state1 = [
 			'00000',
 			'10010','01001','10100','01010','00101',
@@ -77,16 +98,22 @@ bingo = [['i','x','z','z','x'],['x','z','z','x','i'],['z','z','x','i','x'],['z',
 
 for d in bingo:
 	print "State:"
-	pprint.pprint(makeState(state2,signs))
+	printNiceList(makeState(state2,signs))
 	print "Operator:"
-	pprint.pprint(doAllTensorThings(d))
-	print "State == Operator*State:"
-	pprint.pprint( makeState(state2,signs) == numpy.dot(doAllTensorThings(d),makeState(state2,signs)))
+	printNiceArray(doAllTensorThings(d))
+	print "Output:"
+	printNiceList(numpy.dot(doAllTensorThings(d),makeState(state2,signs)))
+	print "1 * State == Operator * State:"
+	print numpy.array_equal(makeState(state2,signs), numpy.dot(doAllTensorThings(d),makeState(state2,signs)))
+	print 
 
 for d in bingo:
 	print "State:"
-	pprint.pprint(makeState(state2,signs))
+	printNiceList(makeState(state1,signs))
 	print "Operator:"
-	pprint.pprint(doAllTensorThings(d))
-	print "State == Operator*State:"
-	pprint.pprint( makeState(state1,signs) == numpy.dot(doAllTensorThings(d),makeState(state1,signs)))
+	printNiceArray(doAllTensorThings(d))
+	print "Output:"
+	printNiceList(numpy.dot(doAllTensorThings(d),makeState(state1,signs)))
+	print "1 * State == Operator * State:"
+	print numpy.array_equal(makeState(state1,signs), numpy.dot(doAllTensorThings(d),makeState(state1,signs)))
+	print 
